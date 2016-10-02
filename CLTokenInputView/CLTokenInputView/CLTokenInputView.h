@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "CLToken.h"
+#import "CLBackspaceDetectingTextField.h"
 
 #if __has_feature(objc_generics)
 #define CL_GENERIC_ARRAY(type) NSArray<type>
@@ -56,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Called when a token has been removed. You should use this opportunity to update your local list of selected items.
  */
 - (void)tokenInputView:(CLTokenInputView *)view didRemoveToken:(CLToken *)token;
-/** 
+/**
  * Called when the user attempts to press the Return key with text partially typed.
  * @return A CLToken for a match (typically the first item in the matching results),
  * or nil if the text shouldn't be accepted.
@@ -86,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) IBInspectable UITextAutocapitalizationType autocapitalizationType;
 @property (assign, nonatomic) IBInspectable UITextAutocorrectionType autocorrectionType;
 @property (assign, nonatomic) IBInspectable UIKeyboardAppearance keyboardAppearance;
-/** 
+/**
  * Optional additional characters to trigger the tokenization process (and call the delegate
  * with `tokenInputView:tokenForText:`
  * @discussion By default this array is empty, as only the Return key will trigger tokenization
@@ -99,7 +100,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, nonatomic) CL_GENERIC_ARRAY(CLToken *) *allTokens;
 @property (readonly, nonatomic, getter = isEditing) BOOL editing;
 @property (readonly, nonatomic) CGFloat textFieldDisplayOffset;
-@property (copy, nonatomic, nullable) NSString *text;
+@property (readonly, nonatomic, nullable) NSString *text;
+@property (strong, nonatomic) CLBackspaceDetectingTextField *textField;
 
 - (void)addToken:(CLToken *)token;
 - (void)removeToken:(CLToken *)token;
